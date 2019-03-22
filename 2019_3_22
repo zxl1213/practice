@@ -1,0 +1,87 @@
+Node* SListFind(SList *s,SlistDataType v){
+  for(Node* c=s->first;c!=NULL;c=c->next){
+  //c->value,c->next
+    if(c->value==v){
+	  return c;
+	}
+  }
+  return NULL;
+}
+/////////////////////
+void SListInsertAfter(Slist *s,Node *pos,SlistDataType v){
+  Node *node=(Node*)malloc(sizeof(Node))
+  node->value=v;
+  node->next=pose->next;
+  pos->next=node;
+}
+////////////////////////
+void SListEraseAfter(SList *s,Node *pos){
+  Node* next=pos->next->next;
+  free(pos->next);
+  pos->next=next;
+}
+///////////////////////
+void SListRemove(SList *s,SlistDataType v){
+  if(s->first==NULL){
+    return;
+  }
+  if(s->first->value==v){
+    Node *second=s->first->next;
+	free(s->first);
+	s->first=second;
+  }else{
+    Node* c=s->first;
+	while(c->next!=NULL){
+	  if(c->next->value==v){
+	    Node* next=c->next;
+		c->next=c->next->next;
+		free(next);
+	  }
+	  c=c->next;
+	}
+  }
+}
+/////////////////////
+void SListRemoveALL(SList *s,SlistDataType v){
+    if(s->first==NULL){
+    return;
+}
+    Node* c=s->first;
+  	while(c->next!=NULL){
+	  if(c->next->value==v){
+	    Node* next=c->next;
+		c->next=c->next->next;
+		free(next);
+	  }
+	  c=c->next;
+	}
+	if(s->first->value=v){
+	  Node* first=s->first;//存下要删的结点的位置
+	  s->first=s->first->next;//改变结点指向
+	  free(first);//删除结点
+	}
+}
+////////////////////////////
+struct ListNode* removeElement(struct ListNode* head, int val){
+  if(head=NULL){
+    return head;
+  }
+  struct ListNode* c=head;
+  while(c->next!=NULL){
+    if(c->next->val==val){
+	  struct ListNode* next=c->next->next;
+	  free(c->next);
+	  c->next=next;
+	}else{
+	  c=c->next;
+	}
+  }
+  if(c=val){
+    struct ListNode* second=head->next;
+	free(head);
+	return second;
+  }else{
+    return head;
+  }
+}
+//////////////////////////////
