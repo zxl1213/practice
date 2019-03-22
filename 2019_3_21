@@ -1,0 +1,73 @@
+“typedef为这个新的结构起了一个名字，叫MyStruct。
+
+　　　　typedef struct tagMyStruct MyStruct;
+
+　　因此，MyStruct实际上相当于struct tagMyStruct，我们可以使用MyStruct varName来定义变量。”
+
+我也是这样理解的！
+
+/////////////////////////////////
+size_t在C语言中就有了。
+
+它是一种“整型”类型，里面保存的是一个整数，就像int, long那样。这种整数用来记录一个大小(size)。size_t的全称应该是size type，就是说“一种用来记录大小的数据类型”。
+
+通常我们用sizeof(XXX)操作，这个操作所得到的结果就是size_t类型。
+
+因为size_t类型的数据其实是保存了一个整数，所以它也可以做加减乘除，也可以转化为int并赋值给int类型的变量。
+/////////////////////////////////
+node    结点
+///////////////////////////////
+p->value=number;//给新建的node结构赋值
+p->next=l->next;//赋值p所指的节点（就是l所指的节点，即链表的第2个节点）
+l->next=p;//将l所指的节点更新为p点
+///////////////////////////////
+#include <iostream>
+using namespace std;
+
+typedef struct Node{
+    int data;
+    Node *next;
+} Node, *List;
+
+Node * reverseList(List head){
+    //定义三个指针，保存原来的连接的状态
+    //当前结点指针
+    Node *pnow = head;
+    //当前结点的前驱指针，初始化是 NULL
+    Node *pre = NULL;
+    //当前结点的后继指针，初始化也是 null
+    Node *pnext = NULL;
+    //定义尾指针
+    Node *tail = NULL;
+    //开始遍历链表
+    while(pnow != NULL){
+        //如果当前结点不是 null，那么初始化 pnext 指针指向当前结点的下一个结点
+        pnext = pnow->next;
+        //如果找到了尾结点，初始化 tail 指针
+        if(NULL == pnext){
+            tail = pnow;
+        }
+        //进行链表的反转，当前结点的 next 指针指向前一个结点，实现链表方向的反转，此时发生了断链
+        pnow->next = pre;
+        //勿忘断链的情形，需要使用 pre 指针保存状态，pre 等价于是后移一个结点
+        pre = pnow;
+        //pnow 后移一个结点
+        pnow = pnext;
+    }
+    
+    return tail;
+}
+void SlistPushBackPractice(Slist *slist, SlistDataType v){
+	Node *node = (Node*)malloc(sizeof(Node));
+	n->value = v;
+	n->next = NULL;
+	if (slist->first == NULL)
+		slist->next = n;
+	else{
+		Node *c = slist->first;
+		while (c->nest != NULL){
+			c = c->next;
+		}
+		c->next = n;
+	}
+}
