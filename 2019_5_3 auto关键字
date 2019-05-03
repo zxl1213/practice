@@ -1,0 +1,38 @@
+#include <iostream>                                                                                     
+#include <typeinfo>
+using namespace std;
+  int Test(){
+    return 10;
+  }
+  void AutoTest(){
+  auto a=10,b=20;
+  //  auto c=10.4,d=10;
+  }
+  //auto作为函数参数无法判断数据类型
+  //void Test(auto a){}
+  //auto不能直接声明数组
+//void Test(){
+// int arr[]={1,2};
+// auto arr[]={1,2};
+// 
+//}
+  int main(){
+    int x=20;
+  //auto 使用时必须初始化
+    auto a=x;
+    auto b='a';
+    auto c=Test();
+  //typeid(),name()返回变量,函数,类的数据类型名
+  //注:对非引用类型,编译时期识别;只有引用类型,运行时识别
+    cout<<typeid(a).name()<<endl;
+    cout<<typeid(b).name()<<endl;
+    cout<<typeid(c).name()<<endl;
+  //auto 和auto*声明指针类型时无区别
+    auto d=&x;
+    auto* e=&x;
+    auto& f=x;
+    cout<<typeid(d).name()<<endl;
+    cout<<typeid(e).name()<<endl;
+    cout<<typeid(f).name()<<endl;
+    return 0;
+  }      
