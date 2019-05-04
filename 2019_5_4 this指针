@@ -1,0 +1,91 @@
+//this指针
+
+//函数体中成员变量的操作都是通过指针完成的
+
+//
+
+#include <iostream>                                                                                       
+
+using namespace std;
+
+class Date{
+
+  public:
+
+    void Dateset(int year,int month,int day){
+
+      _year=year;
+
+      _month=month;
+
+      _day=day;
+
+    }
+
+    void Display(){
+
+      cout<<_year<<" "<<_month<<" "<<_day<<endl;
+
+    }
+
+    int _year;
+
+    int _month;
+
+    int _day;
+
+};
+
+int main(){
+
+  Date d1,d2;
+
+  d1.Dateset(1996,2,10);
+
+  d2.Dateset(1299,4,6);
+
+  d1.Display();
+
+  d2.Display();
+
+}
+
+
+
+//this指针可以为空吗
+
+#include <iostream>                                                                                       
+
+using namespace std;    
+
+class A{    
+
+  public:    
+
+    void printA(){    
+
+      cout<<_a<<endl;    
+
+    }    
+
+    void Show(){    
+
+      cout<<"Show()"<<endl;    
+
+    }    
+
+  private:    
+
+    int _a;    
+
+};    
+
+int main(){    
+
+  A* p=NULL;    
+
+  p->printA();    
+
+  p->Show();    
+
+} 
