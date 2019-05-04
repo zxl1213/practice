@@ -1,0 +1,34 @@
+#include <iostream>                                                                          
+using namespace std;
+  void PtrTest(){    
+    //NULL实际是一个宏,在C头文件stddef.h中    
+  int* p1=NULL;    
+  int* p2=0;    
+  } 
+//NULL的定义
+//#ifndef NULL 
+//#ifdef __cplusplus 
+//#define NULL    0 
+//#else 
+//#define NULL    ((void *)0) 
+//#endif 
+//#endif
+//NULL被定义成字面常量0,或者无类型指针常量
+//关键字nullptr,指针空值常量,类型nullptr_t,可提高代码健壮性
+//健壮性(鲁棒性)Robust,对于规范要求以外的的输入情况的处理能力
+//稳定鲁棒性,性能鲁棒性,
+//头文件中的定义:typedef decltype(nullptr) nullptr_t
+//sizeof(nullptr)==sizeof((void*)0),两者所占字节数相同
+void Test(int){
+  cout<<"Test(int)"<<endl;
+}
+void Test(int*){
+  cout<<"Tset(int*)"<<endl;                                                                  
+}
+int main(){
+  Test(0);
+  //NULL被编辑器默认使用是一个整形常量 
+  //Test(NULL);
+  Test((int*)(NULL));
+  return 0;
+}
