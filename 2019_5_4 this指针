@@ -1,8 +1,8 @@
 //this指针
 
 //函数体中成员变量的操作都是通过指针完成的
-
-//
+//this指针类型:类类型*const
+//对象中不存储this指针
 
 #include <iostream>                                                                                       
 
