@@ -1,0 +1,45 @@
+//六个默认成员函数:                                                                                  
+  //初始化和清理:构造函数初始化,析构函数清理    
+  //拷贝复制:拷贝函数是使用同类对象初始化创建对象,赋值重载,把一个对象赋值给另外一个对象    
+  //取地址重载:普通对象和const对象取地址,(很少自己实现)    
+  //构造函数:    
+  //特点:并不开空间创建对象,而是初始化对象    
+  //1.函数名与类名相同,    
+  //2.创建类类型对象时编译器自动调用,对象生命周期内只调用一次    
+  //3.无返回值    
+  //4.构造函数可以重载    
+  #include <iostream>    
+  using namespace std;    
+  class Date{    
+    public:    
+      //编译器默认生成无参的构造函数,用户已经定义则不再生成    
+      Date(){    
+        _year=1990;    
+        _month=1;    
+        _day=1;    
+      };    
+      Date(int year,int month,int day){    
+        _year=year;    
+        _month=month;    
+        _day=day;    
+      }    
+      void Display(){    
+        cout<<_year<<" "<<_month<<" "<<_day<<endl;    
+      }    
+    private:    
+      int _year;    
+      int _month;    
+      int _day; 
+	   };
+  int main(){
+    //调用无参构造函数
+    //后面不能跟括号,否则变成函数声明
+    Date d1;
+    //返回值为Date类型的对象
+	Date d3();
+    d1.Display();
+    //调用有参构造函数
+    Date d2(2018,5,4);
+    d2.Display();
+  }                    
+ 
