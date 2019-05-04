@@ -45,4 +45,24 @@ int main(){
   cout<<sizeof(A3)<<endl;    
     
   return 0;    
-}    
+} 
+
+//this指针可以为空吗
+#include <iostream>                                                                                       
+using namespace std;    
+class A{    
+  public:    
+    void printA(){    
+      cout<<_a<<endl;    
+    }    
+    void Show(){    
+      cout<<"Show()"<<endl;    
+    }    
+  private:    
+    int _a;    
+};    
+int main(){    
+  A* p=NULL;    
+  p->printA();    
+  p->Show();    
+} 
