@@ -1,0 +1,47 @@
+//信号的阻塞                                                                                              
+//int sigprocmask(int how,const sigset_t *set,sigset_t *oldset);    
+//how:                           
+//    SIG_BLOCK     阻塞set中的信号  mask=mask|set    
+//    SIG_UNBLOCK   解除阻塞在set中的信号 mask=mask&(~set)    
+//    SIG_SETMASK   将set中的信号设置为阻塞信号 mask=set    
+//阻塞set集合中的信号,将原来阻塞的信号放到oldset中,不关心---置空    
+//返回值:成功返回0,失败返回-1    
+#include <stdio.h>               
+#include <unistd.h>              
+#include <stdlib.h>              
+#include <signal.h>              
+void sigcb(int signu){           
+  printf("recv signu: %d",signu);    
+}                                
+int main(){                      
+  signal(SIGINT,sigcb);          
+  signal(SIGRTMIN+5,sigcb);      
+//先阻塞所有信号,按下回车,解除阻塞    
+  sigset_t set,oldset;           
+  sigemptyset(&set);             
+  //sigfillset(sigset_t *set);    
+  //所有信号添加到set集合中      
+  //sigsddset(sigset_t *set,int signum)    
+  //指定信号signum添加到set集合中    
+  sigfillset(&set);              
+  sigprocmask(SIG_BLOCK,&set,&oldset);
+  printf("Press Enter to unblock\n");
+  getchar();
+  sigset_t pending;
+  //int sigpending(sigset_t *set);
+  //获取当前进程中的未决信号
+  sigpending(&pending);
+  int i;
+  for(i=0;i<64;i++){
+    //int sigismember(const sigset_t *set,int signum);
+    //判断信号是否在集合set中
+    if(sigismember(&set,i)){
+      printf("1 ");
+    }else{
+      printf("0 ");
+    }                                                                                                     
+  }
+  printf("\n");
+  sigprocmask(SIG_UNBLOCK,&set,&oldset);
+  return 0;
+}
