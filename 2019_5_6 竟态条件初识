@@ -1,0 +1,22 @@
+  //竟态条件的初步认识    
+  //volatile,    
+  //volatile int a=10;    
+  //int b=a;//int b=*(int*)(&a),从寄存器上读值,更准确,但速度慢很多    
+  #include <stdio.h>    
+  #include <unistd.h>    
+  #include <signal.h>    
+  int a=10,b=10;    
+  int add(){    
+    a++;    
+    sleep(1);                                                                                             
+    b++;    
+    return a+b;    
+  }    
+W>void sigcb(int signu){    
+    printf("signal~~ %d\n",add());    
+  }    
+  int main(){    
+    signal(SIGINT,sigcb);    
+    printf("main~~%d\n",add());    
+    return 0;    
+  }    
