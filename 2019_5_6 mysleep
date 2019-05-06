@@ -1,0 +1,30 @@
+  #include <unistd.h>    
+  #include <signal.h>    
+  void sigcb(int signo){    
+    sleep(10);    
+  }    
+  void sigcb2(int signo){    
+      
+  }    
+  void mysleep(int nsec){    
+    signal(SIGALRM,sigcb2);    
+    sigset_t set,old;    
+    sigemptyset(&set);    
+    sigprocmask(SIG_BLOCK,&set,&old);    
+    alarm(nsec);    
+    sigprocmask(SIG_UNBLOCK,&set,&old);    
+    sigset_t mask;    
+    sigfillset(&mask);    
+    sigdelset(&mask,SIGALRM);    
+    //这时除了alarm信号其他都被阻塞    
+    //int sigsuspend(const sigset_t *mask)    
+    //临时使用mask替换阻塞集合陷入休眠,被唤醒后集合还原                                                   
+    sigsuspend(&mask);    
+    sigprocmask(SIG_SETMASK,&old,NULL);    
+    signal(SIGALRM,SIG_DFL);    
+  }    
+  int main(){
+    signal(SIGQUIT,sigcb);
+    mysleep(3);
+    printf("-------\n");
+  }             
