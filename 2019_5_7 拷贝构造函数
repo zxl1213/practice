@@ -1,0 +1,32 @@
+//拷贝构造函数                                                                                            
+#include <iostream>
+using namespace std;
+class Date{                                       
+  public:            
+    Date(int year=2019,int month=5,int day=7){
+      _year=year;  
+      _month=month;
+      _day=day;                           
+    }
+    //拷贝构造函数是构造函数的一种重载
+    //拷贝构造函数的参数只有一个,且要用引用传参,
+    //直接传值会引发无穷递归调用
+    Date(const Date& d){    
+      _year=d._year;                                                                     
+      _month=d._month;                                                                   
+      _day=d._day;                                                                       
+    }                                                                                    
+    void Display(){                                                                      
+      cout<<_year<<"-"<<_month<<"-"<<_day<<endl;                                         
+    }                                                                                    
+  private:                                                                               
+    int _year;                                                                           
+    int _month;                                                                          
+    int _day;                                                                            
+};           
+int main(){                                                                              
+  Date d1;                                                                               
+  Date d2(d1);                                                                           
+  d2.Display();       
+  
+}        
