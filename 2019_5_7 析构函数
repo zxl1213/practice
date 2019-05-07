@@ -1,0 +1,34 @@
+#include <iostream>                                                                                       
+#include <assert.h>
+#include <unistd.h>
+#include <stdlib.h>
+using namespace std;
+typedef int Datetype;
+class Seqlist{
+  public:
+    Seqlist(int capacity=10){
+      cout<<"hello world"<<endl;
+     _pDate=(Datetype*)malloc(capacity*sizeof(Datetype));
+     assert(_pDate);
+     _capacity=capacity;
+     _size=0;
+    }
+    ~Seqlist(){
+      cout<<"Dying"<<endl;
+      if(_pDate){
+        free(_pDate);//释放堆上空间
+        _pDate=nullptr;//指针置空
+        _capacity=0;
+        _size=0;
+      }
+    }
+  private:
+    int* _pDate;
+    size_t _capacity;
+    size_t _size;
+};
+int main(){
+  Seqlist l;
+  sleep(3);
+  return 0;
+}              
