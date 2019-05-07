@@ -27,6 +27,30 @@ class Date{
 int main(){                                                                              
   Date d1;                                                                               
   Date d2(d1);                                                                           
-  d2.Display();       
-  
-}        
+  d2.Display();         
+}
+//浅拷贝                                                                                                  
+#include <iostream>
+using namespace std;
+class Date{      
+  public:                                       
+  Date(int year=2019,int month=5,int day=7){
+    _year=year;      
+    _month=month;
+    _day=day;    
+  }                  
+  void Display(){                                 
+    cout<<_year<<"-"<<_month<<"-"<<_day<<endl;
+  }              
+  private:        
+    int _year;     
+    int _month;  
+    int _day;    
+};               
+int main(){      
+  Date d1;                                                             
+  //浅拷贝(值拷贝):系统默认调用拷贝构造函数,按内存存储,按字节序拷贝
+  Date d2(d1);     
+  d2.Display();
+}
+
