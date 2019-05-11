@@ -1,0 +1,110 @@
+//生产者与消费者模型    
+#include <iostream>    
+#include <queue>    
+#include <pthread.h>    
+using namespace std;    
+class BlockQueue{    
+  public:    
+    BlockQueue(int cap=10):capacity(cap){    
+      pthread_mutex_init(&_mutex,NULL);    
+      pthread_cond_init(&_producer,NULL);    
+      pthread_cond_init(&_consumer,NULL);    
+    
+    }    
+    ~BlockQueue(){    
+      pthread_mutex_destroy(&_mutex);    
+      pthread_cond_destroy(&_producer);    
+      pthread_cond_destroy(&_producer);    
+    }    
+    bool QueuePush(int data){    
+      QueueLock();    
+      while(QueueFull()){    
+        ProducerWait();                                                                                                                     
+      }    
+      _queue.push(data);    
+      ConsumerWakeup();    
+      QueueUnlock();    
+      return true;    
+    }    
+    bool QueuePop(int *data){    
+      QueueLock();    
+      while(QueueEmpty()){    
+        ConsumerWait();    
+      }
+      *data=_queue.front();
+      _queue.pop();
+      ProducerWakeup();
+      QueueUnlock();
+      return true;
+    }
+  private:
+    void QueueLock(){
+      pthread_mutex_lock(&_mutex);
+    }
+    void QueueUnlock(){
+      pthread_mutex_unlock(&_mutex);
+    }
+    bool QueueEmpty(){
+      return _queue.empty();
+    }
+    bool QueueFull(){
+      return (capacity==(int)_queue.size());
+    }
+    void ProducerWait(){                                                                                                                    
+      pthread_cond_wait(&_producer,&_mutex);
+    }
+    void ProducerWakeup(){
+      pthread_cond_signal(&_producer);
+    }
+    void ConsumerWait(){
+      pthread_cond_wait(&_consumer,&_mutex);
+    }
+    void ConsumerWakeup(){
+      pthread_cond_signal(&_consumer);
+    }
+    std::queue<int> _queue;
+    int capacity;
+    pthread_mutex_t _mutex;
+    pthread_cond_t _producer;
+    pthread_cond_t _consumer; 
+};
+void *thr_producer(void *arg){
+   int i=0;
+  BlockQueue *q=(BlockQueue*)arg;
+  while(1){
+    cout<<"push data "<<i<<endl;
+    q->QueuePush(i++);
+  }
+}
+void *thr_consumer(void *arg){
+  BlockQueue* q=(BlockQueue*)arg;
+  while(1){                                                                                                                                 
+  int data;
+  q->QueuePop(&data);
+  cout<<"constomer get data"<<data<<endl;
+  }
+  return NULL;
+}
+int main(){
+  BlockQueue q;
+  pthread_t ptid[4],ctid[4];
+  for(int i=0;i<4;i++){
+    int ret=pthread_create(&ptid[i],NULL,thr_producer,(void*)&q);
+    if(ret!=0){
+      cout<<"create producer error"<<endl;
+    }
+  }
+  for(int i=0;i<4;i++){
+    int ret=pthread_create(&ctid[i],NULL,thr_consumer,(void*)&q);
+    if(ret!=0){
+      cout<<"create consumer error"<<endl; 
+    }
+  }
+  for(int i=0;i<4;i++){
+    pthread_join(ptid[i],NULL);
+  }
+  for(int i=0;i<4;i++){
+    pthread_join(ctid[i],NULL);
+  }
+  return 0;
+}                   
